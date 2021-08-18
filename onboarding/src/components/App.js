@@ -24,7 +24,8 @@ const initialDisabled = true;
 
 function App() {
 
-  const [ users, setUsers ] = useState( initialUsers );
+  const [ users, setUsers ] = useState([]);
+  const [ user, setUser ] = useState( initialUsers );
   const [ formValues, setFormValues ] = useState( initialFormValues );
   const [ formErrors, setFormErrors ] = useState( initialFormErrors );
   const [ disabled, setDisabled ] = useState( initialDisabled );
@@ -32,7 +33,8 @@ function App() {
   const getUsers = () => {
     axios.get( 'https://reqres.in/api/users' )
       .then(res => {
-        setUsers(res.data);
+        setUser(res.data);
+        setUsers(user);
       })
       .catch(err => console.error(err))
   }
@@ -41,7 +43,7 @@ function App() {
     axios.post( 'https://reqres.in/api/users', newUser )
       .then(res => {
         console.log(res.data);
-        setUsers([ res.data, ...users ]);
+        setUser([ res.data, ...user ]);
       })
       .catch(err => console.error(err))
 

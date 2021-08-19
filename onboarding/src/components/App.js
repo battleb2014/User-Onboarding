@@ -4,6 +4,7 @@ import schema from '../validation/formSchema';
 import * as yup from 'yup';
 import Form from './Form';
 import '../App.css';
+import User from './User';
 
 const initialFormValues = {
   name: '',
@@ -24,8 +25,7 @@ const initialDisabled = true;
 
 function App() {
 
-  const [ users, setUsers ] = useState([]);
-  const [ user, setUser ] = useState( initialUsers );
+  const [ users, setUsers ] = useState( initialUsers );
   const [ formValues, setFormValues ] = useState( initialFormValues );
   const [ formErrors, setFormErrors ] = useState( initialFormErrors );
   const [ disabled, setDisabled ] = useState( initialDisabled );
@@ -33,8 +33,7 @@ function App() {
   const getUsers = () => {
     axios.get( 'https://reqres.in/api/users' )
       .then(res => {
-        setUser(res.data);
-        setUsers(user);
+        setUsers(res.data);
       })
       .catch(err => console.error(err))
   }
@@ -42,8 +41,8 @@ function App() {
   const postNewUser = newUser => {
     axios.post( 'https://reqres.in/api/users', newUser )
       .then(res => {
-        console.log(res.data);
-        setUser([ res.data, ...user ]);
+        setUsers([ res.data, ...users ]);
+        console.log(users);
       })
       .catch(err => console.error(err))
 
@@ -72,7 +71,6 @@ function App() {
       password: formValues.password.trim(),
       terms: formValues.terms
     }
-
     postNewUser(newUser);
   }
 
@@ -86,7 +84,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Onboarding</h1>
+      <header><h1>Onboarding</h1></header>
+
       <Form
         values = { formValues }
         submit = { formSubmit }
@@ -94,6 +93,15 @@ function App() {
         disabled = { disabled }
         errors = { formErrors }
       />
+
+      {/* {
+        users.map(user => {
+          return (
+            <User key = { User.id } details = { user } />
+          )
+        })
+      } */}
+
     </div>
   );
 }

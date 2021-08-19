@@ -64,7 +64,6 @@ const Form = (props) => {
 
                 <label>Accept the terms of use
                     <input
-                        value = { values.terms }
                         type="checkbox"
                         name="terms"
                         checked = { values.terms }

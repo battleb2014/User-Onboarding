@@ -20,12 +20,13 @@ const initialFormErrors = {
   terms: ''
 }
 
-const initialUsers = [];
+const initialUsersValue = [];
 const initialDisabled = true;
 
 function App() {
 
-  const [ users, setUsers ] = useState( initialUsers );
+  const [ users, setUsers ] = useState(initialUsersValue);
+  console.log(users);
   const [ formValues, setFormValues ] = useState( initialFormValues );
   const [ formErrors, setFormErrors ] = useState( initialFormErrors );
   const [ disabled, setDisabled ] = useState( initialDisabled );
@@ -33,7 +34,7 @@ function App() {
   const getUsers = () => {
     axios.get( 'https://reqres.in/api/users' )
       .then(res => {
-        setUsers(res.data);
+        setUsers(res.data.data);
       })
       .catch(err => console.error(err))
   }
@@ -41,8 +42,7 @@ function App() {
   const postNewUser = newUser => {
     axios.post( 'https://reqres.in/api/users', newUser )
       .then(res => {
-        setUsers([ res.data, ...users ]);
-        console.log(users);
+        setUsers([ res.data.data, ...users ]);
       })
       .catch(err => console.error(err))
 
@@ -62,6 +62,7 @@ function App() {
       ...formValues,
       [ name ]: value
     })
+
   }
 
   const formSubmit = () => {
@@ -94,13 +95,13 @@ function App() {
         errors = { formErrors }
       />
 
-      {/* {
+      {
         users.map(user => {
           return (
-            <User key = { User.id } details = { user } />
+            <User key = { user.id } details = { user } />
           )
         })
-      } */}
+      }
 
     </div>
   );

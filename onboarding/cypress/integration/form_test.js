@@ -51,7 +51,34 @@ describe('Onboarding App', () => {
                 .type( '123456789' )
                 .should( 'have.value', '123456789' )
         })
+
+        it('Can check the checkbox', () => {
+            termsCheckbox()
+                .should( 'not.be.checked' )
+                .check()
+                .should( 'be.checked' )
+        })
         
+    })
+
+    describe('Can submit form', () => {
+
+        it('Fill in data, check the box, and submit', () => {
+            nameInput().type( 'Carmen' )
+
+            emailInput().type( 'abcdefg@123.com' )
+
+            passwordInput().type( '123456789' )
+
+            termsCheckbox().check()
+
+            submitBtn().click()
+
+            cy.contains( 'Carmen' )
+            cy.contains( 'abcdefg@123.com' )
+            cy.contains( '123456789' )
+        })
+
     })
 
 })
